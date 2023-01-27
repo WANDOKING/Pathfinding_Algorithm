@@ -6,9 +6,9 @@ namespace Algorithm
     {
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
             Board board = new Board(25);
             
-            Console.CursorVisible = false;
             const int WAIT_TICK = 1000 / 30;
 
             int lastTick = 0;
