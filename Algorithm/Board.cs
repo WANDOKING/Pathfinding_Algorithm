@@ -30,7 +30,6 @@ namespace Algorithm
 
             Tile = new ETileType[size, size];
             Size = size;
-
             DestX = destX;
             DestY = destY;
 
@@ -80,6 +79,7 @@ namespace Algorithm
             }
         }
 
+        // Binary Tree 알고리듬 기반 미로 생성
         private void GenerateByBinaryTree()
         {
             for (int i = 0; i < Size; ++i)
@@ -139,6 +139,7 @@ namespace Algorithm
             }
         }
 
+        // SideWinder 알고리듬 기반 미로 생성
         private void GenerateBySideWinder()
         {
             for (int i = 0; i < Size; ++i)
