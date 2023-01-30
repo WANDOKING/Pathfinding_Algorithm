@@ -6,9 +6,15 @@ namespace Algorithm
 {
     class Board
     {
-        const char CIRCLE = '\u25cf';
+        private const char CIRCLE = '\u25cf';
+        private const ConsoleColor PLAYER_COLOR = ConsoleColor.Blue;
+        private const ConsoleColor DESTINATION_COLOR = ConsoleColor.DarkYellow;
+
         public ETileType[,] Tile { get; private set; }
         public int Size { get; private set; }
+
+        public int DestX { get; private set; }
+        public int DestY { get; private set; }
 
         public Player Player { get; set; }
 
@@ -18,12 +24,15 @@ namespace Algorithm
             Wall
         }
 
-        public Board(int size)
+        public Board(int size, int destX, int destY)
         {
             Debug.Assert(size % 2 == 1); // size는 홀수여야 함
 
             Tile = new ETileType[size, size];
             Size = size;
+
+            DestX = destX;
+            DestY = destY;
 
             GenerateBySideWinder();
         }
@@ -36,9 +45,13 @@ namespace Algorithm
             {
                 for (int j = 0; j < Size; ++j)
                 {
-                    if (Player.PosX == j && Player.PosY == i)
+                    if (j == Player.PosX && i == Player.PosY)
                     {
-                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = PLAYER_COLOR;
+                    }
+                    else if (j == DestY && i == DestX)
+                    {
+                        Console.ForegroundColor = DESTINATION_COLOR;
                     }
                     else
                     {

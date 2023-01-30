@@ -7,12 +7,13 @@ namespace Algorithm
     {
         static void Main(string[] args)
         {
-            Console.CursorVisible = false;
-            Player player;
-            Board board;
+            const int BOARD_SIZE = 25;
 
-            board = new Board(25);
-            player = new Player(1, 1, board.Size - 2, board.Size - 2, board);
+            Console.CursorVisible = false;
+
+            Board board = new Board(BOARD_SIZE, BOARD_SIZE - 2, BOARD_SIZE - 2);
+
+            Player player = new Player(1, 1, board);
             board.Player = player;
             
             const int WAIT_TICK = 1000 / 30;

@@ -11,7 +11,8 @@ namespace Algorithm
     {
         public int PosX { get; private set; }
         public int PosY { get; private set; }
-        public Player(int posX, int posY, int destX, int destY, Board board)
+
+        public Player(int posX, int posY, Board board)
         {
             mBoard = board;
             PosX = posX;
