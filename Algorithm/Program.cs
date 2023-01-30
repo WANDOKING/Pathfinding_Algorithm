@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Algorithm
 {
@@ -7,7 +8,12 @@ namespace Algorithm
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
-            Board board = new Board(25);
+            Player player;
+            Board board;
+
+            board = new Board(25);
+            player = new Player(1, 1, board.Size - 2, board.Size - 2, board);
+            board.Player = player;
             
             const int WAIT_TICK = 1000 / 30;
 
@@ -20,11 +26,14 @@ namespace Algorithm
                 {
                     continue;
                 }
+                int deltaTick = currentTick - lastTick;
                 lastTick = currentTick;
                 #endregion
 
                 // 입력
                 // 로직
+                player.Update(deltaTick);
+
                 // 렌더링
                 Console.SetCursorPosition(0, 0);
                 board.Render();

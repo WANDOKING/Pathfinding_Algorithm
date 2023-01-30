@@ -7,8 +7,10 @@ namespace Algorithm
     class Board
     {
         const char CIRCLE = '\u25cf';
-        public ETileType[,] Tile;
-        public int Size;
+        public ETileType[,] Tile { get; private set; }
+        public int Size { get; private set; }
+
+        public Player Player { get; set; }
 
         public enum ETileType
         {
@@ -34,7 +36,15 @@ namespace Algorithm
             {
                 for (int j = 0; j < Size; ++j)
                 {
-                    Console.ForegroundColor = GetTileColor(Tile[i, j]);
+                    if (Player.PosX == j && Player.PosY == i)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = GetTileColor(Tile[i, j]);
+                    }
+
                     Console.Write(CIRCLE);
                 }
                 Console.WriteLine();
