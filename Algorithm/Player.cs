@@ -30,6 +30,31 @@ namespace Algorithm
             PosX = posX;
             PosY = posY;
 
+            getRouteBFS();
+            //getRouteRightHandRule();
+        }
+
+        public void Update(int deltaTick)
+        {
+            if (mLastIndex >= mPositions.Count)
+            {
+                return;
+            }
+
+            mSumTick += deltaTick;
+
+            if (mSumTick >= MOVE_TICK)
+            {
+                mSumTick = 0;
+
+                PosX = mPositions[mLastIndex].X;
+                PosY = mPositions[mLastIndex].Y;
+                mLastIndex++;
+            }
+        }
+
+        private void getRouteRightHandRule()
+        {
             int direction = (int)EDirection.Up;
 
             // 계산을 위한 코드
@@ -40,7 +65,7 @@ namespace Algorithm
 
             mPositions.Add(new Position(PosX, PosY));
 
-            while (PosX != board.DestX || PosY != board.DestY)
+            while (PosX != mBoard.DestX || PosY != mBoard.DestY)
             {
                 // 1. 현재 바라보는 방향을 기준으로 오른쪽으로 갈 수 있는지 확인
                 if (mBoard.Tile[PosY + mRightY[direction], PosX + mRightX[direction]] == Board.ETileType.Empty)
@@ -72,23 +97,69 @@ namespace Algorithm
             }
         }
 
-        public void Update(int deltaTick)
+        private void getRouteBFS()
         {
-            if (mLastIndex >= mPositions.Count)
+            Position[,] visited = new Position[mBoard.Size, mBoard.Size];
+
+            Queue<Position> q = new Queue<Position>();
+            q.Enqueue(new Position(PosX, PosY));
+            visited[PosY, PosX].X = -1;
+            visited[PosY, PosX].Y = -1;
+
+            while (q.Count > 0)
             {
-                return;
+                int x = q.Peek().X;
+                int y = q.Peek().Y;
+
+                if (x == mBoard.DestX && y == mBoard.DestY)
+                {
+                    break;
+                }
+
+                if (mBoard.Tile[y, x - 1] == Board.ETileType.Empty && visited[y, x - 1].X == 0 && visited[y, x - 1].Y == 0)
+                {
+                    Position next = new Position(x - 1, y);
+                    visited[y, x - 1] = q.Peek();
+                    q.Enqueue(next);
+                }
+
+                if (mBoard.Tile[y, x + 1] == Board.ETileType.Empty && visited[y, x + 1].X == 0 && visited[y, x + 1].Y == 0)
+                {
+                    Position next = new Position(x + 1, y);
+                    visited[y, x + 1] = q.Peek();
+                    q.Enqueue(next);
+                }
+
+                if (mBoard.Tile[y - 1, x] == Board.ETileType.Empty && visited[y - 1, x].X == 0 && visited[y - 1, x].Y == 0)
+                {
+                    Position next = new Position(x, y - 1);
+                    visited[y - 1, x] = q.Peek();
+                    q.Enqueue(next);
+                }
+
+                if (mBoard.Tile[y + 1, x] == Board.ETileType.Empty && visited[y + 1, x].X == 0 && visited[y + 1, x].Y == 0)
+                {
+                    Position next = new Position(x, y + 1);
+                    visited[y + 1, x] = q.Peek();
+                    q.Enqueue(next);
+                }
+
+                q.Dequeue();
             }
 
-            mSumTick += deltaTick;
-
-            if (mSumTick >= MOVE_TICK)
+            int routeX = mBoard.DestX;
+            int routeY = mBoard.DestY;
+            while ((routeX == -1 && routeY == -1) == false)
             {
-                mSumTick = 0;
+                mPositions.Add(new Position(routeX, routeY));
+                int tempX = routeX;
+                int tempY = routeY;
 
-                PosX = mPositions[mLastIndex].X;
-                PosY = mPositions[mLastIndex].Y;
-                mLastIndex++;
+                routeX = visited[tempY, tempX].X;
+                routeY = visited[tempY, tempX].Y;
             }
+
+            mPositions.Reverse();
         }
 
         private enum EDirection
