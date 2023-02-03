@@ -101,11 +101,13 @@ namespace Algorithm
         {
             Position[,] visited = new Position[mBoard.Size, mBoard.Size];
 
+            // init
             Queue<Position> q = new Queue<Position>();
             q.Enqueue(new Position(PosX, PosY));
             visited[PosY, PosX].X = -1;
             visited[PosY, PosX].Y = -1;
 
+            // BFS
             while (q.Count > 0)
             {
                 int x = q.Peek().X;

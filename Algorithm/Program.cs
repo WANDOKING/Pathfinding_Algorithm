@@ -7,16 +7,13 @@ namespace Algorithm
     {
         static void Main(string[] args)
         {
-            const int BOARD_SIZE = 25;
-
             Console.CursorVisible = false;
+            const int BOARD_SIZE = 25;
+            const int WAIT_TICK = 1000 / 30;
 
             Board board = new Board(BOARD_SIZE, BOARD_SIZE - 2, BOARD_SIZE - 2);
-
             Player player = new Player(1, 1, board);
             board.Player = player;
-            
-            const int WAIT_TICK = 1000 / 30;
 
             int lastTick = 0;
             while (true)
@@ -31,7 +28,6 @@ namespace Algorithm
                 lastTick = currentTick;
                 #endregion
 
-                // 입력
                 // 로직
                 player.Update(deltaTick);
 
