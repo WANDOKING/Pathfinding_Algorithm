@@ -6,11 +6,7 @@ namespace Algorithm
 {
     class Board
     {
-        private const char CIRCLE = '\u25cf';
-        private const ConsoleColor PLAYER_COLOR = ConsoleColor.Blue;
-        private const ConsoleColor DESTINATION_COLOR = ConsoleColor.DarkYellow;
-
-        public ETileType[,] Tile { get; private set; }
+        public ETileType[,] Tile { get; set; }
         public int Size { get; private set; }
 
         public int DestX { get; private set; }
@@ -21,7 +17,8 @@ namespace Algorithm
         public enum ETileType
         {
             Empty,
-            Wall
+            Wall,
+            EmptyVisited
         }
 
         public Board(int size, int destX, int destY)
@@ -44,7 +41,7 @@ namespace Algorithm
             {
                 for (int j = 0; j < Size; ++j)
                 {
-                    if (j == Player.PosX && i == Player.PosY)
+                    if (Player != null && j == Player.PosX && i == Player.PosY)
                     {
                         Console.ForegroundColor = PLAYER_COLOR;
                     }
@@ -73,6 +70,8 @@ namespace Algorithm
                     return ConsoleColor.Green;
                 case ETileType.Wall:
                     return ConsoleColor.Red;
+                case ETileType.EmptyVisited:
+                    return ConsoleColor.DarkMagenta;
                 default:
                     Debug.Assert(false);
                     return ConsoleColor.Black;
@@ -209,5 +208,9 @@ namespace Algorithm
                 }
             }
         }
+
+        private const char CIRCLE = '\u25cf';
+        private const ConsoleColor PLAYER_COLOR = ConsoleColor.Blue;
+        private const ConsoleColor DESTINATION_COLOR = ConsoleColor.DarkYellow;
     }
 }
