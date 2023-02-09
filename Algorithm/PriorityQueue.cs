@@ -18,7 +18,7 @@ namespace Algorithm
             {
                 int parentIndex = (currentIndex - 1) / 2;
 
-                if (mHeap[currentIndex].CompareTo(mHeap[parentIndex]) < 0)
+                if (mHeap[currentIndex].CompareTo(mHeap[parentIndex]) > 0)
                 {
                     T temp = mHeap[currentIndex];
                     mHeap[currentIndex] = mHeap[parentIndex];
@@ -51,21 +51,21 @@ namespace Algorithm
                 int leftChildIndex = currentIndex * 2 + 1;
                 int rightChildIndex = currentIndex * 2 + 2;
 
-                T min = mHeap[currentIndex];
-                if (leftChildIndex <= Count - 1 && mHeap[leftChildIndex].CompareTo(min) < 0)
+                T max = mHeap[currentIndex];
+                if (leftChildIndex <= Count - 1 && mHeap[leftChildIndex].CompareTo(max) > 0)
                 {
-                    min = mHeap[leftChildIndex];
+                    max = mHeap[leftChildIndex];
                 }
-                if (rightChildIndex <= Count - 1 && mHeap[rightChildIndex].CompareTo(min) < 0)
+                if (rightChildIndex <= Count - 1 && mHeap[rightChildIndex].CompareTo(max) > 0)
                 {
-                    min = mHeap[rightChildIndex];
+                    max = mHeap[rightChildIndex];
                 }
 
-                if (min.CompareTo(mHeap[currentIndex]) == 0)
+                if (max.CompareTo(mHeap[currentIndex]) == 0)
                 {
                     break;
                 }
-                else if (min.CompareTo(mHeap[leftChildIndex]) == 0)
+                else if (max.CompareTo(mHeap[leftChildIndex]) == 0)
                 {
                     T temp = mHeap[currentIndex];
                     mHeap[currentIndex] = mHeap[leftChildIndex];
