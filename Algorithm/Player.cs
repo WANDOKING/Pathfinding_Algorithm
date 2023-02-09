@@ -45,13 +45,13 @@ namespace Algorithm
             {
                 return 0;
             }
-            else if (this.Fn < obj.Gn)
+            else if (this.Fn < obj.Fn)
             {
-                return -1;
+                return 1;
             }
             else
             {
-                return 1;
+                return -1;
             }
         }
     }
@@ -233,7 +233,7 @@ namespace Algorithm
 
             while (open.Count > 0)
             {
-                Thread.Sleep(20);
+                Thread.Sleep(100);
                 Console.SetCursorPosition(0, 0);
                 mBoard.Render();
 
