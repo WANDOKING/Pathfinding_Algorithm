@@ -31,6 +31,7 @@ namespace Algorithm
             DestY = destY;
 
             GenerateBySideWinder();
+            //GenerateEmptySpace();
         }
 
         public void Render()
@@ -204,6 +205,24 @@ namespace Algorithm
                         int randomIndex = rand.Next(0, count);
                         Tile[i + 1, j - randomIndex  * 2] = ETileType.Empty;
                         count = 1;
+                    }
+                }
+            }
+        }
+
+        private void GenerateEmptySpace()
+        {
+            for (int i = 0; i < Size; ++i)
+            {
+                for (int j = 0; j < Size; ++j)
+                {
+                    if (i == 0 || j == 0 || i == Size - 1 || j == Size - 1)
+                    {
+                        Tile[i, j] = ETileType.Wall;
+                    }
+                    else
+                    {
+                        Tile[i, j] = ETileType.Empty;
                     }
                 }
             }

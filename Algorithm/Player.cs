@@ -43,7 +43,18 @@ namespace Algorithm
         {
             if (this.Fn == obj.Fn)
             {
-                return 0;
+                if (this.Hn == obj.Hn)
+                {
+                    return 0;
+                }
+                if (this.Hn < obj.Hn)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return -1;
+                }
             }
             else if (this.Fn < obj.Fn)
             {
@@ -307,6 +318,70 @@ namespace Algorithm
                         parents[visit.Y, visit.X + 1].X = visit.X;
                         parents[visit.Y, visit.X + 1].Y = visit.Y;
                         open.Add(new PqNode(visit.X + 1, visit.Y, newGn, newHn));
+                    }
+                }
+
+                if (mBoard.Tile[visit.Y - 1, visit.X - 1] == Board.ETileType.Empty && visited[visit.Y - 1, visit.X - 1] == false)
+                {
+                    int prevFn = fns[visit.Y - 1, visit.X - 1];
+                    int newGn = visit.Gn + 1;
+                    int newHn = Math.Abs(visit.Y - 1 - mBoard.DestY) + Math.Abs(visit.X - 1 - mBoard.DestX);
+                    int newFn = newGn + newHn;
+
+                    if (newFn < prevFn)
+                    {
+                        fns[visit.Y - 1, visit.X - 1] = newFn;
+                        parents[visit.Y - 1, visit.X - 1].X = visit.X;
+                        parents[visit.Y - 1, visit.X - 1].Y = visit.Y;
+                        open.Add(new PqNode(visit.X - 1, visit.Y - 1, newGn, newHn));
+                    }
+                }
+
+                if (mBoard.Tile[visit.Y - 1, visit.X + 1] == Board.ETileType.Empty && visited[visit.Y - 1, visit.X + 1] == false)
+                {
+                    int prevFn = fns[visit.Y - 1, visit.X + 1];
+                    int newGn = visit.Gn + 1;
+                    int newHn = Math.Abs(visit.Y - 1 - mBoard.DestY) + Math.Abs(visit.X + 1 - mBoard.DestX);
+                    int newFn = newGn + newHn;
+
+                    if (newFn < prevFn)
+                    {
+                        fns[visit.Y - 1, visit.X + 1] = newFn;
+                        parents[visit.Y - 1, visit.X + 1].X = visit.X;
+                        parents[visit.Y - 1, visit.X + 1].Y = visit.Y;
+                        open.Add(new PqNode(visit.X + 1, visit.Y - 1, newGn, newHn));
+                    }
+                }
+
+                if (mBoard.Tile[visit.Y + 1, visit.X - 1] == Board.ETileType.Empty && visited[visit.Y + 1, visit.X - 1] == false)
+                {
+                    int prevFn = fns[visit.Y + 1, visit.X - 1];
+                    int newGn = visit.Gn + 1;
+                    int newHn = Math.Abs(visit.Y + 1 - mBoard.DestY) + Math.Abs(visit.X - 1 - mBoard.DestX);
+                    int newFn = newGn + newHn;
+
+                    if (newFn < prevFn)
+                    {
+                        fns[visit.Y + 1, visit.X - 1] = newFn;
+                        parents[visit.Y + 1, visit.X - 1].X = visit.X;
+                        parents[visit.Y + 1, visit.X - 1].Y = visit.Y;
+                        open.Add(new PqNode(visit.X - 1, visit.Y + 1, newGn, newHn));
+                    }
+                }
+
+                if (mBoard.Tile[visit.Y + 1, visit.X + 1] == Board.ETileType.Empty && visited[visit.Y + 1, visit.X + 1] == false)
+                {
+                    int prevFn = fns[visit.Y + 1, visit.X + 1];
+                    int newGn = visit.Gn + 1;
+                    int newHn = Math.Abs(visit.Y + 1 - mBoard.DestY) + Math.Abs(visit.X + 1 - mBoard.DestX);
+                    int newFn = newGn + newHn;
+
+                    if (newFn < prevFn)
+                    {
+                        fns[visit.Y + 1, visit.X + 1] = newFn;
+                        parents[visit.Y + 1, visit.X + 1].X = visit.X;
+                        parents[visit.Y + 1, visit.X + 1].Y = visit.Y;
+                        open.Add(new PqNode(visit.X + 1, visit.Y + 1, newGn, newHn));
                     }
                 }
             }
